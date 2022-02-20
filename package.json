@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "api": "nx run backend:serve"
   },
   "private": true,
   "dependencies": {
@@ -22,7 +23,6 @@
     "mongoose": "^6.2.1",
     "nanoid": "^3.3.0",
     "next": "12.0.7",
-    "pino": "^7.7.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "regenerator-runtime": "0.13.7",

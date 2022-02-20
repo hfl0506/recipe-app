@@ -11,7 +11,6 @@ import {
   findUserByEmail,
   findUserById,
 } from '../service/user.service';
-import { log } from '../utils/logger.util';
 
 export async function createUserHanlder(
   req: Request<{}, {}, CreateUserInput>,
@@ -54,10 +53,10 @@ export async function forgotPasswordHandler(
     const { email } = req.body;
     const user = await findUserByEmail(email);
     if (!user) {
-      log.debug(`User with email: ${email} does not exists`);
+      throw new Error(`User with email: ${email} does not exists`);
     }
     if (!user.verified) {
-      log.debug(`User is not verified`);
+      throw new Error(`User is not verified`);
     }
 
     const paasswordResetCode = nanoid();
