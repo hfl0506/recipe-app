@@ -1,18 +1,38 @@
 import * as express from 'express';
-import { createUserHanlder } from '../controllers/user.controller';
+import {
+  createUserHanlder,
+  forgotPasswordHandler,
+  resetPasswordHandler,
+  verifyUserHandler,
+} from '../controllers/user.controller';
 import validateResource from '../middlewares/validate.middleware';
-import { createUserSchema } from '../schema/user.schema';
+import {
+  createUserSchema,
+  forgetUserSchema,
+  resetPasswordSchema,
+  verifyUserSchema,
+} from '../schema/user.schema';
 
 const router = express.Router();
 
 router.post('/register', validateResource(createUserSchema), createUserHanlder);
 
-router.patch('/:id', (req, res) => {
-  res.status(201).send('updated' + req.params.id);
-});
+router.post(
+  '/verify/:id/:verifyCode',
+  validateResource(verifyUserSchema),
+  verifyUserHandler
+);
 
-router.delete('/:id', (req, res) => {
-  res.status(201).send('delete' + req.params.id);
-});
+router.post(
+  '/forgetpassword',
+  validateResource(forgetUserSchema),
+  forgotPasswordHandler
+);
+
+router.post(
+  '/resetpassword/:id/:passwordResetCode',
+  validateResource(resetPasswordSchema),
+  resetPasswordHandler
+);
 
 export default router;
