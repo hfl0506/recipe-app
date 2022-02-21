@@ -16,7 +16,7 @@ export async function findUserById(id: string) {
   }
 }
 
-export async function findUserByEmail(email: string) {
+export async function findUserByEmail(email: string): Promise<any> {
   try {
     return await UserModel.findOne({ email });
   } catch (e: any) {

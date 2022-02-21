@@ -7,4 +7,6 @@ const router = express.Router();
 
 router.post('/login', validateResource(userLoginSchema), userLoginHanlder);
 
+router.post('/refresh');
+
 export default router;

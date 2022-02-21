@@ -44,10 +44,9 @@ function signJwtToken(
   key: privateKeyEnum,
   options?: jwt.SignOptions | undefined
 ) {
-  const signKey = Buffer.from(key, 'base64').toString('ascii');
-  return jwt.sign(object, signKey, {
+  //const signKey = Buffer.from(key, 'base64').toString('ascii');
+  return jwt.sign(object, key, {
     ...(options && options),
-    algorithm: 'RS256',
   });
 }
 
@@ -65,7 +64,7 @@ export function verifyJwt<T>(token: string, key: publicKeyEnum): T | null {
 function signAccessToken(user: DocumentType<User>) {
   const payload = omit(user.toJSON(), privateFields);
 
-  const accessToken = signJwtToken(payload, privateKeyEnum.refresh, {
+  const accessToken = signJwtToken(payload, privateKeyEnum.access, {
     expiresIn: TokenExpiration.Access,
   });
 

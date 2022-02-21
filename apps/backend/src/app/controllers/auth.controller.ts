@@ -12,13 +12,13 @@ export const userLoginHanlder = async (
   try {
     const { email, password } = req.body;
     const user = await findUserByEmail(email);
-    if (!user) throw new Error('User is not existed');
+    console.log(user);
     const isMatch = await argon2.verify(user.password, password);
     if (!isMatch) throw new Error('Password invalid');
 
     const { at, rt } = buildTokens(user);
     setTokens(res, at, rt);
-    res.status(200).json({ at, rt });
+    res.status(200).json({ accessToken: at, RefreshToken: rt });
   } catch (error) {
     throw new Error(error);
   }
