@@ -1,17 +1,22 @@
 import * as jwt from 'jsonwebtoken';
 import { DocumentType } from '@typegoose/typegoose';
 import { omit } from 'lodash';
-import { ObjectId } from 'mongoose';
+import { ObjectId, Types } from 'mongoose';
 import { User } from '../models/user.model';
 import { CookieOptions, Response } from 'express';
-import {
-  Cookies,
-  privateKeyEnum,
-  publicKeyEnum,
-  TokenExpiration,
-} from '../enum/jwt.enum';
+import { Cookies, TokenExpiration } from '../enum/jwt.enum';
 
-const privateFields: string[] = [
+interface RefreshToken {
+  userId: string;
+  exp: number;
+}
+
+interface AccessToken extends RefreshToken {
+  firstName: string;
+  lastName: string;
+}
+
+export const privateFields: string[] = [
   'password',
   '__v',
   'verificationCode',
@@ -39,9 +44,13 @@ const accessTokenCookieOptions: CookieOptions = {
   maxAge: TokenExpiration.Access * 1000,
 };
 
+export function omitUserField(user: DocumentType<User>, field: string[]) {
+  return omit(user.toJSON(), field);
+}
+
 function signJwtToken(
   object: Object,
-  key: privateKeyEnum,
+  key: string,
   options?: jwt.SignOptions | undefined
 ) {
   //const signKey = Buffer.from(key, 'base64').toString('ascii');
@@ -50,21 +59,26 @@ function signJwtToken(
   });
 }
 
-export function verifyJwt<T>(token: string, key: publicKeyEnum): T | null {
-  const publicKey = Buffer.from(key, 'base64').toString('ascii');
-
+export function verifyAccessToken(token: string): AccessToken {
   try {
-    const decoded = jwt.verify(token, publicKey) as T;
-    return decoded;
+    return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!) as AccessToken;
+  } catch (e: any) {
+    return null;
+  }
+}
+
+export function verifyRefreshToken(token: string): RefreshToken {
+  try {
+    return jwt.verify(token, process.env.REFRESH_TOKEN_SECRET) as RefreshToken;
   } catch (e: any) {
     return null;
   }
 }
 
 function signAccessToken(user: DocumentType<User>) {
-  const payload = omit(user.toJSON(), privateFields);
-
-  const accessToken = signJwtToken(payload, privateKeyEnum.access, {
+  const payload = omitUserField(user, privateFields);
+  console.log(payload);
+  const accessToken = signJwtToken(payload, process.env.ACCESS_TOKEN_SECRET!, {
     expiresIn: TokenExpiration.Access,
   });
 
@@ -74,7 +88,7 @@ function signAccessToken(user: DocumentType<User>) {
 function signRefreshToken({ userId }: { userId: ObjectId }) {
   const refreshToken = signJwtToken(
     { session: userId },
-    privateKeyEnum.refresh,
+    process.env.REFRESH_TOKEN_SECRET!,
     {
       expiresIn: TokenExpiration.Refresh,
     }
@@ -99,4 +113,18 @@ export function buildTokens(user: DocumentType<User>) {
 export function clearTokens(res: Response) {
   res.cookie(Cookies.ACCESS, '', { ...defaultCookieOptions, maxAge: 0 });
   res.cookie(Cookies.REFRESH, '', { ...defaultCookieOptions, maxAge: 0 });
+}
+
+export function refreshTokens(current: RefreshToken, user: DocumentType<User>) {
+  let refreshPayload;
+  const expiration = new Date(current.exp * 1000);
+  const now = new Date();
+  const secondUntilExpiration = (expiration.getTime() - now.getTime()) / 1000;
+
+  if (secondUntilExpiration < TokenExpiration.RefreshIfLessThan) {
+    refreshPayload = { userId: current.userId, exp: TokenExpiration.Refresh };
+  }
+  const accessToken = signAccessToken(user);
+  const refreshToken = refreshPayload && signRefreshToken(refreshPayload);
+  return { accessToken, refreshToken };
 }
