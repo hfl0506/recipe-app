@@ -1,17 +1,19 @@
 import { AppProps } from 'next/app';
-import Head from 'next/head';
-import { AuthContext } from '../lib/context';
+import { AuthLayout } from '../components/AuthLayout';
+import Navbar from '../components/Navbar';
+import { UserProvider } from '../lib/context';
 import './styles.css';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
-    <>
-      {/* <AuthContext.Provider } >
-      <main className="app">
-        <Component {...pageProps} />
-      </main>
-    </AuthContext.Provider> */}
-    </>
+    <UserProvider initialUser={pageProps?.user}>
+      <AuthLayout>
+        <div className="h-screen">
+          <Navbar />
+          <Component {...pageProps} />
+        </div>
+      </AuthLayout>
+    </UserProvider>
   );
 }
 
