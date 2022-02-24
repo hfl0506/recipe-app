@@ -21,7 +21,8 @@ function index() {
     } catch (error) {}
   };
   return (
-    <div>
+    <div className="flex bg-color-black">
+      <h1 className="text-slate-500">hello world</h1>
       <form onSubmit={onLogin}>
         <div>
           <label htmlFor="email">Email:</label>
