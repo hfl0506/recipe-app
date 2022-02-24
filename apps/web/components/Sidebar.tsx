@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-function Sidebar() {
+const Sidebar = () => {
   return (
     <nav>
       <li>
@@ -10,6 +10,6 @@ function Sidebar() {
       </li>
     </nav>
   );
-}
+};
 
 export default Sidebar;

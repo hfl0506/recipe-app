@@ -10,7 +10,6 @@ function CustomApp({ Component, pageProps }: AppProps) {
     <UserProvider initialUser={pageProps?.user}>
       <RouteGuard>
         <div className="h-screen">
-          <Navbar />
           <Component {...pageProps} />
         </div>
       </RouteGuard>

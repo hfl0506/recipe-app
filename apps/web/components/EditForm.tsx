@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-function EditForm() {
+const EditForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     password: '',
@@ -62,6 +62,6 @@ function EditForm() {
       </form>
     </div>
   );
-}
+};
 
 export default EditForm;

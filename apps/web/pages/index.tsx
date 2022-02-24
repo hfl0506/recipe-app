@@ -1,3 +1,4 @@
+import Navbar from '../components/Navbar';
 import styles from './index.module.css';
 
 export function Index() {
@@ -6,7 +7,11 @@ export function Index() {
    *
    * Note: The corresponding styles are in the ./index.css file.
    */
-  return <div>hi</div>;
+  return (
+    <div className="">
+      <Navbar />
+    </div>
+  );
 }
 
 export default Index;
