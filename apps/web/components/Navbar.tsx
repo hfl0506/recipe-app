@@ -30,7 +30,7 @@ function Navbar() {
             </li>
           </>
         )}
-        {!user.firstName && (
+        {!user?.firstName && (
           <li>
             <Link href="/login">
               <button>Login</button>

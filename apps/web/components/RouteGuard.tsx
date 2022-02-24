@@ -23,15 +23,10 @@ const RouteGuard = ({ children }: Props) => {
   useEffect(() => {
     authCheck();
     const hideContent = () => setAuth(false);
-
-    router.events.on('routeChangeStart', hideContent);
-    router.events.on('routeChangeComplete', authCheck);
-
     return () => {
-      router.events.off('routeChangeStart', hideContent);
-      router.events.off('routeChangeComplete', authCheck);
+      hideContent();
     };
   }, []);
-  return auth && children;
+  return children;
 };
 export default RouteGuard;
