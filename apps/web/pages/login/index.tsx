@@ -2,9 +2,10 @@ import { useUser } from 'apps/web/lib/context';
 import { Types } from 'mongoose';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
-function index() {
+function Index() {
+  const [year, setYear] = useState('');
   const [login, setLogin] = useState({
     email: '',
     password: '',
@@ -14,6 +15,11 @@ function index() {
   const router = useRouter();
 
   const { email, password } = login;
+
+  useEffect(() => {
+    const time = new Date().getFullYear().toString();
+    setYear(time);
+  }, []);
 
   const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
     setLogin((prev) => ({
@@ -89,11 +95,11 @@ function index() {
           </Link>
         </div>
         <p className="text-center text-gray-500 text-sm mt-3">
-          &copy;{new Date().getFullYear} Recipe App Corp. All rights reserved.
+          &copy; {year} Recipe App Corp. All rights reserved.
         </p>
       </form>
     </div>
   );
 }
 
-export default index;
+export default Index;
