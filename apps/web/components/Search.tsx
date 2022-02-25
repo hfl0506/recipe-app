@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-const Search = () => {
+function Search() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {}, [search]);
@@ -26,6 +26,6 @@ const Search = () => {
       />
     </div>
   );
-};
+}
 
 export default Search;

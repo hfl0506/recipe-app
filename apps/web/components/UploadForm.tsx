@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-const UploadForm = () => {
+function UploadForm() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -22,7 +22,7 @@ const UploadForm = () => {
   };
   return (
     <section>
-      <form>
+      <form onSubmit={onSubmit}>
         <div>
           <label htmlFor="">title</label>
           <input
@@ -58,6 +58,6 @@ const UploadForm = () => {
       </form>
     </section>
   );
-};
+}
 
 export default UploadForm;

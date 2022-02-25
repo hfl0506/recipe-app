@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useUser } from '../lib/context';
 
-const Navbar = () => {
+function Navbar() {
   const { user } = useUser();
 
   useEffect(() => {
@@ -43,6 +43,6 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;

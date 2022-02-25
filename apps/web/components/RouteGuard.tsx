@@ -6,7 +6,7 @@ type Props = {
   children: JSX.Element;
 };
 
-const RouteGuard = ({ children }: Props) => {
+function RouteGuard({ children }: Props) {
   const router = useRouter();
   const { user } = useUser();
   const [auth, setAuth] = useState(false);
@@ -28,5 +28,5 @@ const RouteGuard = ({ children }: Props) => {
     };
   }, []);
   return children;
-};
+}
 export default RouteGuard;
