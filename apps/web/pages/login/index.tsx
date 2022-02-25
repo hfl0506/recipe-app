@@ -45,7 +45,7 @@ function Index() {
     <div className="w-full max-w-xs mx-auto">
       <form
         onSubmit={onLogin}
-        className="bg-white shadow-xl rounded px-8 pb-8 mb-4 mt-20"
+        className="bg-white shadow-xl rounded px-8 pb-8 mb-4 mt-20 border"
       >
         <div className="mt-10 mb-4">
           <label

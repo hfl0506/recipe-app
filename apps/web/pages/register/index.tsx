@@ -24,7 +24,7 @@ function index() {
     <div className="w-full max-w-sm mx-auto">
       <form
         onSubmit={onSubmit}
-        className="bg-white shadow-xl rounded px-8 pb-8 mb-4 mt-20"
+        className="bg-white shadow-xl rounded px-8 pb-8 mb-4 mt-20 border"
       >
         <div className="mt-10 mb-4">
           <label
