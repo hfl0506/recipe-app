@@ -24,7 +24,6 @@ export function Index() {
   }, []);
   return (
     <div className="">
-      <Navbar />
       <Search />
       {recipes?.length > 0 && (
         <div className="w-full h-screen flex flex-col items-center">

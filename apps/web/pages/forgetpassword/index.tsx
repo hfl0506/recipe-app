@@ -1,5 +1,5 @@
 function index() {
-  return <div></div>;
+  return <div>forget password</div>;
 }
 
 export default index;

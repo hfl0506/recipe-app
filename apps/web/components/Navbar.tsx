@@ -33,11 +33,18 @@ function Navbar() {
             </>
           )}
           {!user?.firstName && (
-            <li className="text-sm">
-              <Link href="/login">
-                <button>Login</button>
-              </Link>
-            </li>
+            <>
+              <li className="text-sm mr-8">
+                <Link href="/login">
+                  <button>Login</button>
+                </Link>
+              </li>
+              <li className="text-sm mr-8">
+                <Link href="/register">
+                  <button>Register</button>
+                </Link>
+              </li>
+            </>
           )}
         </ul>
       </div>
