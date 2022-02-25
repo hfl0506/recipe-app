@@ -4,10 +4,10 @@ import UploadForm from 'apps/web/components/UploadForm';
 
 function index() {
   return (
-    <>
-      <Sidebar />
+    <div>
       <UploadForm />
-    </>
+      <Sidebar />
+    </div>
   );
 }
 

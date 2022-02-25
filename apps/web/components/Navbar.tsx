@@ -10,27 +10,22 @@ const Navbar = () => {
     console.log(user);
   }, []);
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-white w-full relative">
-      <div className="container flex flex-wrap justify-between items-center mx-auto bg-gray-700">
+    <nav className="">
+      <div className="h-16 flex flex-wrap justify-between items-center bg-gray-700">
         <Link href="/">
-          <span className="font-semibold text-xl tracking-tight">
+          <span className="font-semibold text-xl tracking-tight text-white ml-2">
             Recipe App
           </span>
         </Link>
-        <ul className="flex flex-col mt-4">
-          <li>
-            <Link href="/">
-              <button>Recipe App</button>
-            </Link>
-          </li>
+        <ul className="flex flex-row text-white">
           {user?.firstName && (
             <>
-              <li>
+              <li className="text-sm mr-8">
                 <Link href="/signout">
                   <button>Sign Out</button>
                 </Link>
               </li>
-              <li>
+              <li className="text-sm mr-8">
                 <Link href="/admin">
                   <button>Write recipe</button>
                 </Link>
@@ -38,7 +33,7 @@ const Navbar = () => {
             </>
           )}
           {!user?.firstName && (
-            <li>
+            <li className="text-sm">
               <Link href="/login">
                 <button>Login</button>
               </Link>
