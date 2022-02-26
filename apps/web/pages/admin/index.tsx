@@ -6,7 +6,6 @@ function index() {
   return (
     <div>
       <UploadForm />
-      <Sidebar />
     </div>
   );
 }
