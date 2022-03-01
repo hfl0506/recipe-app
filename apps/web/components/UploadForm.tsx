@@ -8,7 +8,9 @@ function UploadForm() {
   });
   const { title, description, imageUrl } = formData;
 
-  const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = async (
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -51,8 +53,8 @@ function UploadForm() {
           >
             Description
           </label>
-          <input
-            type="text"
+          <textarea
+            rows={8}
             id="description"
             name="description"
             value={description}
