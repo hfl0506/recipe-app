@@ -39,6 +39,7 @@ export const userRefreshHandler = async (req: Request, res: Response) => {
     if (!user) throw 'User not found';
     const { accessToken, refreshToken } = refreshTokens(current, user);
     setTokens(res, accessToken, refreshToken);
+    res.send(user);
   } catch (error) {
     clearTokens(res);
   }

@@ -16,6 +16,7 @@
     "@typegoose/typegoose": "^9.6.2",
     "argon2": "^0.28.4",
     "autoprefixer": "^10.4.2",
+    "axios": "^0.26.0",
     "colors": "^1.4.0",
     "cookie-parser": "^1.4.6",
     "core-js": "^3.6.5",

@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useUser } from '../lib/context';
+import useAuth from '../hooks/useAuth';
 
 function Navbar() {
-  const { user } = useUser();
+  const { user } = useAuth();
 
   useEffect(() => {
     console.log(user);

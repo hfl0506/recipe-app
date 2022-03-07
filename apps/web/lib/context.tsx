@@ -8,10 +8,6 @@ export interface UserContext {
 
 export const UserContextImpl = createContext<UserContext>(null!);
 
-export function useUser() {
-  return useContext(UserContextImpl);
-}
-
 interface Props {
   initialUser?: UserDocument;
 }
