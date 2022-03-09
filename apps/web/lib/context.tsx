@@ -1,22 +1,22 @@
 import { createContext, FC, useContext, useState } from 'react';
-import { UserDocument } from '../interface/type.interface';
+import { AuthInterface, UserDocument } from '../interface/type.interface';
 
 export interface UserContext {
-  user?: UserDocument;
-  setUser: (user?: UserDocument) => void;
+  auth?: AuthInterface;
+  setAuth: (auth: AuthInterface) => void;
 }
 
 export const UserContextImpl = createContext<UserContext>(null!);
 
 interface Props {
-  initialUser?: UserDocument;
+  initialUser?: AuthInterface;
 }
 
 export const UserProvider: FC<Props> = ({ children, initialUser }) => {
-  const [user, setUser] = useState(initialUser);
+  const [auth, setAuth] = useState(initialUser);
 
   return (
-    <UserContextImpl.Provider value={{ user, setUser }}>
+    <UserContextImpl.Provider value={{ auth, setAuth }}>
       {children}
     </UserContextImpl.Provider>
   );

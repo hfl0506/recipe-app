@@ -4,10 +4,10 @@ import { useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 
 function Navbar() {
-  const { user } = useAuth();
+  const { auth } = useAuth();
 
   useEffect(() => {
-    console.log(user);
+    console.log(auth);
   }, []);
   return (
     <nav className="">
@@ -18,7 +18,7 @@ function Navbar() {
           </span>
         </Link>
         <ul className="flex flex-row text-white">
-          {user?.firstName && (
+          {auth?.user?.firstName && (
             <>
               <li className="text-sm mr-8">
                 <Link href="/signout">
@@ -32,7 +32,7 @@ function Navbar() {
               </li>
             </>
           )}
-          {!user?.firstName && (
+          {!auth?.user?.firstName && (
             <>
               <li className="text-sm mr-8">
                 <Link href="/login">
