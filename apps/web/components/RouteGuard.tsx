@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useUser } from '../lib/context';
+import useAuth from '../hooks/useAuth';
 
 type Props = {
   children: JSX.Element;
@@ -8,21 +8,20 @@ type Props = {
 
 function RouteGuard({ children }: Props) {
   const router = useRouter();
-  const { user } = useUser();
-  const [auth, setAuth] = useState(false);
-
+  const [user, setUser] = useState(false);
+  const { auth } = useAuth();
   function authCheck() {
-    if (!user) {
-      setAuth(false);
+    if (!auth) {
+      setUser(false);
       router.push('/login');
     } else {
-      setAuth(true);
+      setUser(true);
     }
   }
 
   useEffect(() => {
     authCheck();
-    const hideContent = () => setAuth(false);
+    const hideContent = () => setUser(false);
     return () => {
       hideContent();
     };

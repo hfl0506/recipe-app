@@ -1,8 +1,8 @@
-import { useUser } from 'apps/web/lib/context';
-import { Types } from 'mongoose';
+import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 function Index() {
   const [year, setYear] = useState('');
@@ -10,7 +10,7 @@ function Index() {
     email: '',
     password: '',
   });
-  const { setUser } = useUser();
+  const [cookie, setCookie] = useCookies(['accessToken', 'refreshToken']);
 
   const router = useRouter();
 
@@ -31,15 +31,14 @@ function Index() {
   const onLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      setUser({
-        _id: new Types.ObjectId('6211a827e474d2e62cbc6330'),
-        email: 'test@test.com',
-        firstName: 'test',
-        lastName: 'test123',
-      });
-
+      const response = await axios.post('/api/login', login);
+      const data = response.data;
+      setCookie('accessToken', JSON.stringify(data.accessToken));
+      setCookie('refreshToken', JSON.stringify(data.refreshToken));
       router.push('/');
-    } catch (error) {}
+    } catch (error) {
+      throw new Error(error);
+    }
   };
   return (
     <div className="w-full max-w-xs mx-auto">
