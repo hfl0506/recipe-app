@@ -31,13 +31,19 @@ function Index() {
   const onLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/login', login);
-      const data = response.data;
-      setCookie('accessToken', JSON.stringify(data.accessToken));
-      setCookie('refreshToken', JSON.stringify(data.refreshToken));
+      const response = await fetch('http://localhost:8080/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(login),
+      });
+      console.log(response);
+      //setCookie('accessToken', JSON.stringify(data.accessToken));
+      //setCookie('refreshToken', JSON.stringify(data.refreshToken));
       router.push('/');
     } catch (error) {
-      throw new Error(error);
+      console.log(error);
     }
   };
   return (

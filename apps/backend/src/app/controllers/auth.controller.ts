@@ -20,13 +20,13 @@ export const userLoginHanlder = async (
   try {
     const { email, password } = req.body;
     const user = await findUserByEmail(email);
-    console.log(user);
     const isMatch = await argon2.verify(user.password, password);
     if (!isMatch) throw new Error('Password invalid');
 
     const { at, rt } = buildTokens(user);
+    const omitUser = omitUserField(user, privateFields);
     setTokens(res, at, rt);
-    res.status(200).json({ accessToken: at, RefreshToken: rt });
+    res.status(200).send({ accessToken: at, RefreshToken: rt, user: omitUser });
   } catch (error) {
     throw new Error(error);
   }
@@ -39,8 +39,9 @@ export const userRefreshHandler = async (req: Request, res: Response) => {
     if (!user) throw 'User not found';
     const { accessToken, refreshToken } = refreshTokens(current, user);
     setTokens(res, accessToken, refreshToken);
+    const omitUser = omitUserField(user, privateFields);
     res.send({
-      user: user,
+      user: omitUser,
       accessToken: accessToken,
     });
   } catch (error) {
@@ -61,7 +62,9 @@ export const userGetMeHandler = async (req: Request, res: Response) => {
   try {
     const user = await findUserById(res.locals.token.userId);
     const omitUser = omitUserField(user, privateFields);
-    res.json(omitUser);
+    res.send({
+      user: omitUser,
+    });
   } catch (error) {
     throw new Error();
   }
